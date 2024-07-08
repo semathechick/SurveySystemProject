@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
@@ -20,6 +20,15 @@ using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
+using Application.Services.Answers;
+using Application.Services.Members;
+using Application.Services.MemberAnswers;
+using Application.Services.Questions;
+using Application.Services.MemberQuestions;
+using Application.Services.Surveys;
+using Application.Services.SurveyAnswers;
+using Application.Services.SurveyMembers;
+using Application.Services.QuestionAnswers;
 
 namespace Application;
 
@@ -61,6 +70,15 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
+        services.AddScoped<IAnswerService, AnswerManager>();
+        services.AddScoped<IMemberService, MemberManager>();
+        services.AddScoped<IMemberAnswerService, MemberAnswerManager>();
+        services.AddScoped<IQuestionService, QuestionManager>();
+        services.AddScoped<IMemberQuestionService, MemberQuestionManager>();
+        services.AddScoped<ISurveyService, SurveyManager>();
+        services.AddScoped<ISurveyAnswerService, SurveyAnswerManager>();
+        services.AddScoped<ISurveyMemberService, SurveyMemberManager>();
+        services.AddScoped<IQuestionAnswerService, QuestionAnswerManager>();
         return services;
     }
 

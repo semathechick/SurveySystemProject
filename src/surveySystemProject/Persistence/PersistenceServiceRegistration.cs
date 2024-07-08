@@ -1,4 +1,4 @@
-﻿using Application.Services.Repositories;
+using Application.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +12,7 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("BaseDb"));
+        services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("BaseDb")));
         services.AddDbMigrationApplier(buildServices => buildServices.GetRequiredService<BaseDbContext>());
 
         services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
@@ -22,6 +22,15 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
 
+        services.AddScoped<IAnswerRepository, AnswerRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IMemberAnswerRepository, MemberAnswerRepository>();
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<IMemberQuestionRepository, MemberQuestionRepository>();
+        services.AddScoped<ISurveyRepository, SurveyRepository>();
+        services.AddScoped<ISurveyAnswerRepository, SurveyAnswerRepository>();
+        services.AddScoped<ISurveyMemberRepository, SurveyMemberRepository>();
+        services.AddScoped<IQuestionAnswerRepository, QuestionAnswerRepository>();
         return services;
     }
 }
